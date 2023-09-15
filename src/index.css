@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    html {
+        font-family: 'Oswald', sans-serif;
+    }
+
+    input[type] {
+        outline: none;
+    }
+
+    .pstyles:focus {
+        outline: none;
+    }
+
+    span {
+        color: gray;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+
+}
