@@ -1,16 +1,14 @@
 import { useForm } from "react-hook-form"
 import Sent from "./components/Sent"
 import { useRef, useState } from "react"
-
-import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser'
+import { Blocks } from 'react-loader-spinner'
 
 const App = () => {
 
   const [formSent, setFormSent] = useState(false)
   const [isSending, setIsSending] = useState(false)
   const form = useRef()
-
-
   const {
     register,
     handleSubmit,
@@ -21,9 +19,6 @@ const App = () => {
   const onSubmit = handleSubmit((data) => {
 
     setIsSending(true)
-
-    console.log(data);
-
     emailjs.sendForm('service_47que9k', 'template_ytdpe9l', form.current, 'hBXuZP_BIx802oYTe')
       .then((result) => {
         console.log(result.text);
@@ -33,13 +28,7 @@ const App = () => {
       }, (error) => {
         console.log(error.text);
       });
-
-
-
   })
-
-  /* console.log(errors); */
-
   function handleBack() {
     setFormSent(false)
   }
@@ -50,12 +39,19 @@ const App = () => {
         <h1 className="pb-4 text-5xl uppercase tracking-[.7rem] text-[white] font-light">Contacto</h1>
         <p className="uppercase text-[white] tracking-[4px] border-b-[2px] border-red-500 p-2 font-bold ">mfkdigital.com</p>
       </header>
-
-
       <>
         {
           isSending ?
-            <span>sending...</span>
+            <div className="pt-[12rem]">
+              <Blocks
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+              />
+            </div>
             :
             <form ref={form} onSubmit={onSubmit} className={`flex flex-col justify-center items-center w-[700px] ${formSent ? 'hidden' : ''}`}>
               <h2 className="text-[40px] uppercase p-10 tracking-[.8rem] text-center font-light">Realiza tu consulta</h2>
@@ -72,16 +68,12 @@ const App = () => {
                   errors.mensaje && <span>{errors.mensaje.message}</span>
                 }
               </div>
-
-
-
               {/* nombre */}
               <input
                 placeholder="NOMBRE"
                 name="nombre"
                 className="tracking-[3px] text-[.9rem] w-full p-3 pt-12 border-b border-gray-400 uppercase"
                 type="text"
-
                 {...register("nombre", {
                   required: {
                     value: true,
@@ -96,9 +88,7 @@ const App = () => {
                     message: "- Máximo 25 caracteres"
                   }
                 })}
-
               />
-
               {/* correo */}
               <input
                 placeholder="CORREO ELECTRONICO"
@@ -116,7 +106,6 @@ const App = () => {
                   }
                 })}
               />
-
               {/* mensaje */}
               <textarea
                 name="mensaje"
@@ -134,25 +123,17 @@ const App = () => {
                     message: "El mensaje debe tener al menos 20 caracteres."
                   }
                 })}
-
               />
-
               <div className="flex w-full justify-end pt-5">
                 <button className="uppercase border border-red-600 py-5 px-10 tracking-[5px]" type="submit" value="Send">Enviar</button>
               </div>
-
             </form>
-
         }
-
-
       </>
-
       {/* CONSULTA ENVIADA */}
       <div className={`${formSent ? 'block' : 'hidden'} `}>
         <Sent handleBack={handleBack} />
       </div>
-
     </div>
   )
 }

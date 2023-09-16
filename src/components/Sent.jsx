@@ -2,7 +2,7 @@
 
 const Sent = ({ handleBack }) => {
     return (
-        <div className="w-full pt-12 flex flex-col justify-center items-center">
+        <div className="w-full pt-[12rem] flex flex-col justify-center items-center">
             <div>
                 Su consulta fue enviada, nos comunicaremos a la brevedad. Muchas gracias.
             </div>
