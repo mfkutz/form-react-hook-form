@@ -16,22 +16,29 @@ const App = () => {
     reset
   } = useForm()
 
-  const onSubmit = handleSubmit((data) => {
 
-    setIsSending(true)
-    emailjs.sendForm('service_47que9k', 'template_ytdpe9l', form.current, 'hBXuZP_BIx802oYTe')
-      .then((result) => {
-        console.log(result.text);
-        reset()
-        setIsSending(false)
-        setFormSent(true)
-      }, (error) => {
-        console.log(error.text);
-      });
-  })
+  const onSubmit = handleSubmit(async (data) => {
+    setIsSending(true);
+    try {
+      const result = await emailjs.sendForm(
+        'service_47que9k',
+        'template_ytdpe9l',
+        form.current,
+        'hBXuZP_BIx802oYTe'
+      );
+      console.log(result.text);
+      reset();
+      setIsSending(false);
+      setFormSent(true);
+    } catch (error) {
+      console.error(error.text);
+    }
+  });
+
   function handleBack() {
     setFormSent(false)
   }
+
 
   return (
     <div className=" h-screen flex flex-col items-center ">
